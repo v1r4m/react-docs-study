@@ -1,19 +1,31 @@
-//import { useState } from "react";
 
-export function getFinalState(baseState, queue) {
-  let finalState = baseState;
-  //const [stateNumber, setStateNumber] = useState(baseState);
-  // for(var i =0;i<queue.length;i++){
-  //   setStateNumber(queue[i]);
-  // }
-  // finalState = stateNumber;
-  //이건 왜 안되나요...?
-  for(var i = 0;i<queue.length; i++){
-      if(typeof(queue[i]) == 'function'){
-        finalState = queue[i](finalState);
-      }else{
-        finalState = queue[i];
-      }
-  }
-  return finalState;
-}
+// export function getFinalState(baseState, queue) {
+//   let finalState = baseState;
+
+//   queue.forEach((update) => {
+//     finalState = typeof update === "function" ? update(finalState) : update;
+//   });
+
+//   return finalState;
+// }
+
+export const getFinalState = (baseState, queue) =>
+  queue.reduce(
+    (state, update) => (typeof update === "function" ? update(state) : update),
+    baseState
+  );
+
+// import { useEffect, useState } from "react";
+
+// export function getFinalState(baseState, queue) {
+//   const [finalState, setFinalState] = useState(baseState);
+
+//   useEffect(() => {
+//     queue.forEach((update) => setFinalState(update));
+//     return () => {
+//       setFinalState(baseState);
+//     };
+//   }, []);
+
+//   return finalState;
+// }
