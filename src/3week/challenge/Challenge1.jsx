@@ -22,7 +22,19 @@ export default function ShoppingCart() {
   const [products, setProducts] = useState(initialProducts);
 
   // FIXME: 이벤트핸들러를 구현하기
-  function handleIncreaseClick(productId) {}
+  function handleIncreaseClick(productId) {
+    setProducts((prev)=>{
+      const newProducts = prev.slice();
+      const targetIndex = newProducts.findIndex(({id})=>id ===productId);
+      if(targetIndex < 0) return newProducts;
+      const targetProduct = newProducts[targetIndex];
+      newProducts[targetIndex] = {
+        ...targetProduct,
+        count:targetProduct.count+1,
+      };
+      return newProducts;
+    })
+  }
 
   return (
     <ul>
